@@ -1,35 +1,1528 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using @vitejs/plugin-react"
-    />
-    <link rel="apple-touch-icon" href="/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="/manifest.json" />
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OdontoSystem - Gestão de Clínica Odontológica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f9ff;
+        }
+        .login-container {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0284c7 0%, #075985 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(3, 105, 161, 0.3);
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .active-nav {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid white;
+        }
+        .table-row:hover {
+            background-color: #e0f2fe;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="min-h-screen flex flex-col">
+        <div id="login-page" class="min-h-screen flex items-center justify-center p-4">
+            <div class="login-container w-full max-w-md rounded-xl shadow-2xl overflow-hidden">
+                <div class="p-8 text-white text-center">
+                    <h1 class="text-3xl font-bold mb-2">OdontoSystem</h1>
+                    <p class="text-blue-100">Sistema de Gestão para Clínicas Odontológicas</p>
+                </div>
+                <div class="bg-white p-8 rounded-t-3xl -mt-4">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Login</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Usuário/CPF</label>
+                            <input id="login-username" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Digite seu CPF ou usuário">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                            <input id="login-password" type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Digite sua senha">
+                        </div>
+                        <button id="login-btn" class="w-full btn-primary text-white py-2 px-4 rounded-lg font-medium">Entrar</button>
+                        <div class="text-center">
+                            <a href="#" id="show-register" class="text-sm text-blue-600 hover:text-blue-800">Novo dentista? Cadastre-se</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        <div id="register-page" class="min-h-screen flex items-center justify-center p-4 hidden">
+            <div class="login-container w-full max-w-md rounded-xl shadow-2xl overflow-hidden">
+                <div class="p-8 text-white text-center">
+                    <h1 class="text-3xl font-bold mb-2">OdontoSystem</h1>
+                    <p class="text-blue-100">Cadastro de Novo Dentista</p>
+                </div>
+                <div class="bg-white p-8 rounded-t-3xl -mt-4">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Cadastro</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                            <input id="register-name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Digite seu nome completo">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+                            <input id="register-birth" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                            <input id="register-cpf" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Digite seu CPF">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">CRO</label>
+                            <input id="register-cro" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <button id="register-btn" class="w-full btn-primary text-white py-2 px-4 rounded-lg font-medium">Cadastrar</button>
+                        <div class="text-center">
+                            <a href="#" id="back-to-login" class="text-sm text-blue-600 hover:text-blue-800">Voltar para login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
-  <script type="module" src="/src/index.jsx"></script>
+        <div id="main-app" class="hidden min-h-screen flex flex-col">
+            <header class="bg-white shadow-md">
+                <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                        <h1 class="ml-2 text-xl font-bold text-gray-800">OdontoSystem</h1>
+                    </div>
+                    <div class="flex items-center">
+                        <span id="user-name" class="mr-4 text-gray-700"></span>
+                        <button id="logout-btn" class="text-gray-600 hover:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex flex-1">
+                <aside class="w-64 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-4">
+                    <nav class="mt-8 space-y-1">
+                        <a href="#" class="nav-item active-nav flex items-center px-4 py-3 rounded-lg" data-page="dashboard">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Dashboard
+                        </a>
+                        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-page="commission">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Cálculo de Comissão
+                        </a>
+                        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-page="history">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                            Histórico
+                        </a>
+                        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-page="calculator">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            Calculadora
+                        </a>
+                        <div id="admin-menu" class="hidden pt-4 mt-4 border-t border-blue-500">
+                            <p class="px-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Administração</p>
+                            <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg mt-2" data-page="dentists">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                                Dentistas
+                            </a>
+                            <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg" data-page="settings">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Configurações
+                            </a>
+                        </div>
+                    </nav>
+                </aside>
+
+                <main class="flex-1 p-6 overflow-auto">
+                    <div id="dashboard-page" class="page-content">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Dashboard</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="card bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-600">Total de Comissões</h3>
+                                        <p id="total-commission" class="text-2xl font-bold text-gray-800">R$ 0,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-600">Procedimentos</h3>
+                                        <p id="total-procedures" class="text-2xl font-bold text-gray-800">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-600">Valor Total</h3>
+                                        <p id="total-value" class="text-2xl font-bold text-gray-800">R$ 0,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Últimos Procedimentos</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paciente</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Procedimento</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comissão</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-procedures" class="bg-white divide-y divide-gray-200">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="commission-page" class="page-content hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Cálculo de Comissão</h2>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <form id="commission-form" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Procedimento</label>
+                                        <select id="procedure" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">Selecione um procedimento</option>
+                                            </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Valor do Procedimento (R$)</label>
+                                        <input id="procedure-value" type="number" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="0,00">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Forma de Pagamento</label>
+                                        <select id="payment-method" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                            </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Comissão</label>
+                                        <select id="commission-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="Quem fez" data-percentage="25">Quem fez (25%)</option>
+                                            <option value="Quem vendeu" data-percentage="12.5">Quem vendeu (12,5%)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Dentista Responsável</label>
+                                        <select id="responsible-dentist" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">Selecione o dentista</option>
+                                            </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Paciente</label>
+                                        <input id="patient-name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Nome do paciente">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Data do Atendimento</label>
+                                        <input id="service-date" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+
+                                <div class="bg-blue-50 p-4 rounded-lg mt-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Resultado do Cálculo</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Desconto Taxas:</p>
+                                            <p id="net-value" class="text-lg font-semibold text-gray-800">R$ 0,00</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-600">Desconto Taxas e Laboratorio:</p>
+                                            <p id="profit" class="text-lg font-semibold text-gray-800">R$ 0,00</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-600">Comissão:</p>
+                                            <p id="commission" class="text-lg font-semibold text-blue-600">R$ 0,00</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-end">
+                                    <button type="button" id="calculate-btn" class="mr-4 py-2 px-6 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 font-medium">Calcular</button>
+                                    <button type="submit" id="save-commission-btn" class="btn-primary py-2 px-6 text-white rounded-lg font-medium">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="history-page" class="page-content hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Histórico de Procedimentos</h2>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="flex flex-wrap gap-4 mb-6">
+                                <div class="flex-1 min-w-[200px]">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Data Inicial</label>
+                                    <input id="start-date" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div class="flex-1 min-w-[200px]">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Data Final</label>
+                                    <input id="end-date" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div id="admin-dentist-filter" class="flex-1 min-w-[200px] hidden">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Dentista</label>
+                                    <select id="dentist-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Todos</option>
+                                        </select>
+                                </div>
+                                <div class="flex items-end">
+                                    <button id="filter-btn" class="btn-primary py-2 px-6 text-white rounded-lg font-medium">Filtrar</button>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paciente</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Procedimento</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Forma Pagamento</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comissão</th>
+                                            <th id="admin-actions-header" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="history-table" class="bg-white divide-y divide-gray-200">
+                                        </tbody>
+                                </table>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Total de Procedimentos:</p>
+                                        <p id="history-total-procedures" class="text-lg font-semibold text-gray-800">0</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Soma dos Valores:</p>
+                                        <p id="history-total-value" class="text-lg font-semibold text-gray-800">R$ 0,00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Soma das Comissões:</p>
+                                        <p id="history-total-commission" class="text-lg font-semibold text-blue-600">R$ 0,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="calculator-page" class="page-content hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Calculadora de Parcelamento</h2>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Valor Desejado (R$)</label>
+                                    <input id="desired-value" type="number" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="0,00">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Número de Parcelas</label>
+                                    <select id="installments" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="1" data-tax="3.24">1x</option>
+                                        <option value="2" data-tax="4.54">2x</option>
+                                        <option value="3" data-tax="5.24">3x</option>
+                                        <option value="4" data-tax="5.94">4x</option>
+                                        <option value="5" data-tax="6.64">5x</option>
+                                        <option value="6" data-tax="7.34">6x</option>
+                                        <option value="7" data-tax="8.04">7x</option>
+                                        <option value="8" data-tax="8.74">8x</option>
+                                        <option value="9" data-tax="9.44">9x</option>
+                                        <option value="10" data-tax="10.14">10x</option>
+                                        <option value="11" data-tax="10.84">11x</option>
+                                        <option value="12" data-tax="11.54">12x</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mt-6">
+                                <button id="calculate-installment-btn" class="btn-primary py-2 px-6 text-white rounded-lg font-medium">Calcular</button>
+                            </div>
+
+                            <div id="installment-result" class="mt-6 p-6 bg-blue-50 rounded-lg hidden">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">Resultado</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Valor a Cobrar:</p>
+                                        <p id="charge-value" class="text-2xl font-bold text-blue-600">R$ 0,00</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Valor de Cada Parcela:</p>
+                                        <p id="installment-value" class="text-2xl font-bold text-gray-800">R$ 0,00</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-600">Taxa Aplicada:</p>
+                                    <p id="applied-tax" class="text-lg font-semibold text-gray-800">0%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="dentists-page" class="page-content hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Gerenciamento de Dentistas</h2>
+                        <div class="bg-white rounded-xl shadow-md p-6">
+                            <div class="mb-6">
+                                <button id="add-dentist-btn" class="btn-primary py-2 px-6 text-white rounded-lg font-medium">Adicionar Dentista</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CRO</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data de Nascimento</th>
+                                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dentists-table" class="bg-white divide-y divide-gray-200">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings-page" class="page-content hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Configurações</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Procedimentos</h3>
+                                <div class="mb-4">
+                                    <button id="add-procedure-btn" class="btn-primary py-2 px-6 text-white rounded-lg font-medium">Adicionar Procedimento</button>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Custo (R$)</th>
+                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="procedures-table" class="bg-white divide-y divide-gray-200">
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Formas de Pagamento</h3>
+                                <div class="mb-4">
+                                    <button id="add-payment-btn" class="btn-primary py-2 px-6 text-white rounded-lg font-medium">Adicionar Forma de Pagamento</button>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa (%)</th>
+                                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="payments-table" class="bg-white divide-y divide-gray-200">
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div id="add-dentist-modal" class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md hidden">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Adicionar Dentista</h3>
+                <form id="add-dentist-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                        <input id="modal-dentist-name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+                        <input id="modal-dentist-birth" type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                        <input id="modal-dentist-cpf" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">CRO</label>
+                        <input id="modal-dentist-cro" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" class="close-modal py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancelar</button>
+                        <button type="submit" class="btn-primary py-2 px-4 text-white rounded-lg">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="add-procedure-modal" class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md hidden">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Adicionar Procedimento</h3>
+                <form id="add-procedure-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Procedimento</label>
+                        <input id="modal-procedure-name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Custo (R$)</label>
+                        <input id="modal-procedure-cost" type="number" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" class="close-modal py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancelar</button>
+                        <button type="submit" class="btn-primary py-2 px-4 text-white rounded-lg">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="add-payment-modal" class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md hidden">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Adicionar Forma de Pagamento</h3>
+                <form id="add-payment-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                        <input id="modal-payment-name" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Taxa (%)</label>
+                        <input id="modal-payment-tax" type="number" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" class="close-modal py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancelar</button>
+                        <button type="submit" class="btn-primary py-2 px-4 text-white rounded-lg">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="confirmation-modal" class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md hidden">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Confirmação</h3>
+                <p id="confirmation-message" class="text-gray-600 mb-6">Tem certeza que deseja excluir este item?</p>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="close-modal py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancelar</button>
+                    <button id="confirm-action" class="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+            <span id="toast-message">Operação realizada com sucesso!</span>
+        </div>
+    </div>
+
+    <script>
+        // Initialize data storage and current user state
+        const userData = {
+            currentUser: null,
+            isAdmin: false,
+            // Default initial data if localStorage is empty
+            defaultDentists: [
+                { id: 1, name: 'Admin', cpf: 'admin', password: 'admin', cro: 'N/A', birth: '2000-01-01', isAdmin: true },
+                { id: 2, name: 'Dr. João Silva', cpf: '12345678900', password: '12345678900', cro: 'CRO-123', birth: '1985-05-15', isAdmin: false },
+            ],
+            defaultProcedures: [
+                { id: 1, name: 'Coroa Porcelana', cost: 500 },
+                { id: 2, name: 'PT', cost: 500 },
+            ],
+            defaultPaymentMethods: [
+                { id: 1, name: 'Dinheiro', tax: 0 },
+                { id: 2, name: 'Pix', tax: 0 },
+                { id: 3, name: 'Débito', tax: 0.94 },
+            ],
+            defaultRecords: [], // Records start empty or with example data
+        };
+
+        // --- Local Storage Management ---
+        function loadFromLocalStorage(key, defaultValue) {
+            try {
+                const storedValue = localStorage.getItem(key);
+                return storedValue ? JSON.parse(storedValue) : defaultValue;
+            } catch (error) {
+                console.error(`Error loading ${key} from localStorage:`, error);
+                return defaultValue; // Return default if parsing fails
+            }
+        }
+
+        function saveToLocalStorage(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (error) {
+                console.error(`Error saving ${key} to localStorage:`, error);
+            }
+        }
+
+        // --- Utility Functions ---
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+        }
+
+        function formatDate(dateString) {
+            const [year, month, day] = dateString.split('-');
+            return `${day}/${month}/${year}`;
+        }
+
+        let confirmActionCallback = null;
+
+        function showConfirmationModal(message, callback) {
+            document.getElementById('confirmation-message').textContent = message;
+            confirmActionCallback = callback;
+            document.getElementById('confirmation-modal').classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('add-dentist-modal').classList.add('hidden');
+            document.getElementById('add-procedure-modal').classList.add('hidden');
+            document.getElementById('add-payment-modal').classList.add('hidden');
+            document.getElementById('confirmation-modal').classList.add('hidden');
+            modalOverlay.classList.add('hidden');
+            confirmActionCallback = null;
+        }
+
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toast.classList.remove('bg-green-500', 'bg-red-500', 'bg-blue-500');
+            if (type === 'success') {
+                toast.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                toast.classList.add('bg-red-500');
+            } else if (type === 'info') {
+                toast.classList.add('bg-blue-500');
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-20');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-20');
+            }, 3000);
+        }
+
+        // --- Core Application Functions ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = loginUsername.value.trim();
+            const password = loginPassword.value.trim();
+
+            let user = null;
+
+            if (username === 'admin' && password === 'admin') {
+                user = { id: 1, name: 'Admin', cpf: 'admin', password: 'admin', cro: 'N/A', birth: '2000-01-01', isAdmin: true };
+            } else {
+                user = userData.dentists.find(d => d.cpf === username && d.password === password);
+            }
+
+            if (user) {
+                userData.currentUser = user;
+                userData.isAdmin = user.isAdmin;
+
+                userName.textContent = user.name;
+
+                if (user.isAdmin) {
+                    adminMenu.classList.remove('hidden');
+                    adminDentistFilter.classList.remove('hidden');
+                    adminActionsHeader.classList.remove('hidden');
+                    populateDentistFilter();
+                } else {
+                    adminMenu.classList.add('hidden');
+                    adminDentistFilter.classList.add('hidden');
+                    adminActionsHeader.classList.add('hidden');
+                }
+
+                loginPage.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+
+                showPage('dashboard');
+
+                loginUsername.value = '';
+                loginPassword.value = '';
+            } else {
+                showToast('Usuário ou senha incorretos.', 'error');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('register-name').value.trim();
+            const birth = document.getElementById('register-birth').value;
+            const cpf = document.getElementById('register-cpf').value.trim();
+            const cro = document.getElementById('register-cro').value.trim();
+
+            if (!name || !birth || !cpf || !cro) {
+                showToast('Preencha todos os campos para se cadastrar.', 'error');
+                return;
+            }
+
+            if (userData.dentists.some(d => d.cpf === cpf)) {
+                showToast('CPF já cadastrado. Use outro ou faça login.', 'error');
+                return;
+            }
+
+            const newDentist = {
+                id: userData.dentists.length ? Math.max(...userData.dentists.map(d => d.id)) + 1 : 1,
+                name,
+                birth,
+                cpf,
+                cro,
+                password: cpf,
+                isAdmin: false
+            };
+
+            userData.dentists.push(newDentist);
+            saveToLocalStorage('dentists', userData.dentists);
+
+            showToast('Cadastro realizado com sucesso! Faça login com seu CPF.', 'success');
+
+            document.getElementById('register-name').value = '';
+            document.getElementById('register-birth').value = '';
+            document.getElementById('register-cpf').value = '';
+            document.getElementById('register-cro').value = '';
+
+            registerPage.classList.add('hidden');
+            loginPage.classList.remove('hidden');
+        }
+
+        function handleLogout() {
+            userData.currentUser = null;
+            userData.isAdmin = false;
+
+            mainApp.classList.add('hidden');
+            loginPage.classList.remove('hidden');
+
+            navItems.forEach(navItem => navItem.classList.remove('active-nav'));
+            document.querySelector('[data-page="dashboard"]').classList.add('active-nav');
+        }
+
+        function showPage(pageId) {
+            pageContents.forEach(page => {
+                page.classList.add('hidden');
+            });
+
+            document.getElementById(`${pageId}-page`).classList.remove('hidden');
+
+            if (pageId === 'dashboard') {
+                updateDashboard();
+            } else if (pageId === 'history') {
+                loadHistory();
+            } else if (pageId === 'commission') {
+                populateProceduresSelect();
+                populatePaymentMethodsSelect();
+                populateResponsibleDentistSelect();
+            } else if (pageId === 'dentists' && userData.isAdmin) {
+                loadDentists();
+                populateDentistFilter();
+            } else if (pageId === 'settings' && userData.isAdmin) {
+                loadProcedures();
+                loadPaymentMethods();
+            }
+        }
+
+        function updateDashboard() {
+            const totalCommissionEl = document.getElementById('total-commission');
+            const totalProceduresEl = document.getElementById('total-procedures');
+            const totalValueEl = document.getElementById('total-value');
+            const recentProceduresEl = document.getElementById('recent-procedures');
+
+            const filteredRecords = userData.isAdmin
+                ? userData.records
+                : userData.records.filter(r => r.dentistId === userData.currentUser.id);
+
+            const totalCommission = filteredRecords.reduce((sum, record) => sum + record.commission, 0);
+            const totalValue = filteredRecords.reduce((sum, record) => sum + record.value, 0);
+
+            totalCommissionEl.textContent = formatCurrency(totalCommission);
+            totalProceduresEl.textContent = filteredRecords.length;
+            totalValueEl.textContent = formatCurrency(totalValue);
+
+            recentProceduresEl.innerHTML = '';
+
+            const sortedRecords = [...filteredRecords].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const recentRecords = sortedRecords.slice(0, 5);
+
+            if (recentRecords.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Nenhum procedimento registado</td>
+                `;
+                recentProceduresEl.appendChild(row);
+            } else {
+                recentRecords.forEach(record => {
+                    const row = document.createElement('tr');
+                    row.className = 'table-row';
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(record.date)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.patient}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.procedure}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(record.value)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 font-medium">${formatCurrency(record.commission)}</td>
+                    `;
+
+                    recentProceduresEl.appendChild(row);
+                });
+            }
+        }
+
+        // --- Commission Calculation Page Functions ---
+        function populateProceduresSelect() {
+            procedureSelect.innerHTML = '<option value="">Selecione um procedimento</option>';
+            userData.procedures.forEach(proc => {
+                const option = document.createElement('option');
+                option.value = proc.name;
+                option.textContent = proc.name;
+                option.setAttribute('data-cost', proc.cost);
+                procedureSelect.appendChild(option);
+            });
+        }
+
+        function populatePaymentMethodsSelect() {
+            paymentMethodSelect.innerHTML = '';
+            userData.paymentMethods.forEach(method => {
+                const option = document.createElement('option');
+                option.value = method.name;
+                option.textContent = method.name;
+                option.setAttribute('data-tax', method.tax);
+                paymentMethodSelect.appendChild(option);
+            });
+        }
+
+        function populateResponsibleDentistSelect() {
+            responsibleDentistSelect.innerHTML = '<option value="">Selecione o dentista</option>';
+            userData.dentists.forEach(dentist => {
+                if (!dentist.isAdmin) {
+                    const option = document.createElement('option');
+                    option.value = dentist.id;
+                    option.textContent = dentist.name;
+                    responsibleDentistSelect.appendChild(option);
+                }
+            });
+
+            if (userData.currentUser && !userData.currentUser.isAdmin) {
+                responsibleDentistSelect.value = userData.currentUser.id;
+                responsibleDentistSelect.disabled = true;
+            } else {
+                responsibleDentistSelect.disabled = false;
+            }
+        }
+
+        function updateProcedureValue() {
+            const procedureValueInput = document.getElementById('procedure-value');
+
+            if (procedureSelect.value) {
+                const selectedOption = procedureSelect.options[procedureSelect.selectedIndex];
+                const cost = selectedOption.getAttribute('data-cost');
+
+                const suggestedValue = parseFloat(cost) * 2;
+                procedureValueInput.value = suggestedValue.toFixed(2);
+            } else {
+                procedureValueInput.value = '';
+            }
+            document.getElementById('net-value').textContent = 'R$ 0,00';
+            document.getElementById('profit').textContent = 'R$ 0,00';
+            document.getElementById('commission').textContent = 'R$ 0,00';
+        }
+
+        function calculateCommission() {
+            const procedureValue = parseFloat(document.getElementById('procedure-value').value);
+            const commissionTypeSelect = document.getElementById('commission-type');
+
+            if (!procedureSelect.value || isNaN(procedureValue) || procedureValue <= 0) {
+                showToast('Selecione um procedimento e insira um valor válido para calcular.', 'error');
+                return;
+            }
+
+            const selectedProcedure = procedureSelect.options[procedureSelect.selectedIndex];
+            const procedureCost = parseFloat(selectedProcedure.getAttribute('data-cost'));
+
+            const selectedPayment = paymentMethodSelect.options[paymentMethodSelect.selectedIndex];
+            const paymentTax = parseFloat(selectedPayment.getAttribute('data-tax')) / 100;
+
+            const selectedCommission = commissionTypeSelect.options[commissionTypeSelect.selectedIndex];
+            const commissionPercentage = parseFloat(selectedCommission.getAttribute('data-percentage')) / 100;
+
+            const netValue = procedureValue * (1 - paymentTax);
+            const profit = netValue - procedureCost;
+            const commission = profit * commissionPercentage;
+
+            document.getElementById('net-value').textContent = formatCurrency(netValue);
+            document.getElementById('profit').textContent = formatCurrency(profit);
+            document.getElementById('commission').textContent = formatCurrency(commission);
+        }
+
+        function saveCommission(e) {
+            e.preventDefault();
+
+            const procedureValue = parseFloat(document.getElementById('procedure-value').value);
+            const patientName = document.getElementById('patient-name').value.trim();
+            const serviceDate = document.getElementById('service-date').value;
+            const responsibleDentistId = responsibleDentistSelect.value;
+
+            if (!procedureSelect.value || isNaN(procedureValue) || procedureValue <= 0 || !patientName || !serviceDate || !responsibleDentistId) {
+                showToast('Por favor, preencha todos os campos obrigatórios (Procedimento, Valor, Paciente, Data, Dentista).', 'error');
+                return;
+            }
+
+            const selectedProcedure = procedureSelect.options[procedureSelect.selectedIndex];
+            const procedureCost = parseFloat(selectedProcedure.getAttribute('data-cost'));
+            const procedureName = selectedProcedure.textContent;
+
+            const selectedPayment = paymentMethodSelect.options[paymentMethodSelect.selectedIndex];
+            const paymentTax = parseFloat(selectedPayment.getAttribute('data-tax')) / 100;
+            const paymentMethod = selectedPayment.textContent;
+
+            const commissionTypeSelect = document.getElementById('commission-type');
+            const selectedCommission = commissionTypeSelect.options[commissionTypeSelect.selectedIndex];
+            const commissionPercentage = parseFloat(selectedCommission.getAttribute('data-percentage')) / 100;
+            const commissionType = selectedCommission.value;
+
+            const netValue = procedureValue * (1 - paymentTax);
+            const profit = netValue - procedureCost;
+            const commission = profit * commissionPercentage;
+
+            const newRecord = {
+                id: userData.records.length ? Math.max(...userData.records.map(r => r.id)) + 1 : 1,
+                dentistId: parseInt(responsibleDentistId),
+                procedure: procedureName,
+                value: procedureValue,
+                paymentMethod: paymentMethod,
+                commissionType: commissionType,
+                patient: patientName,
+                date: serviceDate,
+                commission: commission,
+                procedureCost: procedureCost,
+                paymentTax: paymentTax * 100
+            };
+
+            userData.records.push(newRecord);
+            saveToLocalStorage('records', userData.records);
+
+            document.getElementById('commission-form').reset();
+            document.getElementById('service-date').value = today;
+            document.getElementById('net-value').textContent = 'R$ 0,00';
+            document.getElementById('profit').textContent = 'R$ 0,00';
+            document.getElementById('commission').textContent = 'R$ 0,00';
+            populateResponsibleDentistSelect();
+
+            showToast('Comissão registada com sucesso!', 'success');
+            updateDashboard();
+            loadHistory();
+        }
+
+        // --- Installment Calculator Functions ---
+        function calculateInstallment() {
+            const desiredValue = parseFloat(document.getElementById('desired-value').value);
+            const installmentsSelect = document.getElementById('installments');
+
+            if (isNaN(desiredValue) || desiredValue <= 0) {
+                showToast('Informe um valor válido e maior que zero para o cálculo.', 'error');
+                document.getElementById('installment-result').classList.add('hidden');
+                return;
+            }
+
+            const selectedInstallment = installmentsSelect.options[installmentsSelect.selectedIndex];
+            const installments = parseInt(selectedInstallment.value);
+            const tax = parseFloat(selectedInstallment.getAttribute('data-tax')) / 100;
+
+            const chargeValue = desiredValue / (1 - tax);
+            const installmentValue = chargeValue / installments;
+
+            document.getElementById('charge-value').textContent = formatCurrency(chargeValue);
+            document.getElementById('installment-value').textContent = formatCurrency(installmentValue);
+            document.getElementById('applied-tax').textContent = `${(tax * 100).toFixed(2)}%`;
+
+            document.getElementById('installment-result').classList.remove('hidden');
+        }
+
+        // --- History Page Functions ---
+        function loadHistory() {
+            const historyTable = document.getElementById('history-table');
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            const dentistFilter = document.getElementById('dentist-filter').value;
+
+            let filteredRecords = userData.records;
+
+            if (userData.isAdmin && dentistFilter) {
+                filteredRecords = filteredRecords.filter(r => r.dentistId === parseInt(dentistFilter));
+            } else if (!userData.isAdmin) {
+                filteredRecords = filteredRecords.filter(r => r.dentistId === userData.currentUser.id);
+            }
+
+            if (startDate) {
+                filteredRecords = filteredRecords.filter(r => r.date >= startDate);
+            }
+
+            if (endDate) {
+                filteredRecords = filteredRecords.filter(r => r.date <= endDate);
+            }
+
+            filteredRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            historyTable.innerHTML = '';
+
+            let totalProcedures = 0;
+            let totalValue = 0;
+            let totalCommission = 0;
+
+            if (filteredRecords.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">Nenhum registo encontrado para os filtros aplicados.</td>
+                `;
+                historyTable.appendChild(row);
+            } else {
+                filteredRecords.forEach(record => {
+                    const row = document.createElement('tr');
+                    row.className = 'table-row';
+
+                    const dentist = userData.dentists.find(d => d.id === record.dentistId);
+                    const dentistName = dentist ? dentist.name : 'Dentista Removido';
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(record.date)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.patient} (${dentistName})</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.procedure}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(record.value)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.paymentMethod} (${record.paymentTax.toFixed(2)}%)</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.commissionType}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 font-medium">${formatCurrency(record.commission)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ${userData.isAdmin ? '' : 'hidden'}">
+                            <button class="text-red-600 hover:text-red-900 ml-4" onclick="deleteRecord(${record.id})">Excluir</button>
+                        </td>
+                    `;
+                    historyTable.appendChild(row);
+
+                    totalProcedures++;
+                    totalValue += record.value;
+                    totalCommission += record.commission;
+                });
+            }
+
+            document.getElementById('history-total-procedures').textContent = totalProcedures;
+            document.getElementById('history-total-value').textContent = formatCurrency(totalValue);
+            document.getElementById('history-total-commission').textContent = formatCurrency(totalCommission);
+        }
+
+        function deleteRecord(id) {
+            showConfirmationModal('Tem certeza que deseja excluir este registo de procedimento?', () => {
+                const index = userData.records.findIndex(r => r.id === id);
+                if (index > -1) {
+                    userData.records.splice(index, 1);
+                    saveToLocalStorage('records', userData.records);
+                    showToast('Procedimento excluído com sucesso!', 'success');
+                    loadHistory();
+                    updateDashboard();
+                }
+            });
+        }
+
+
+        // --- Dentists Management Functions (Admin Only) ---
+        function loadDentists() {
+            const dentistsTable = document.getElementById('dentists-table');
+            dentistsTable.innerHTML = '';
+
+            const nonAdminDentists = userData.dentists.filter(d => !d.isAdmin);
+
+            if (nonAdminDentists.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Nenhum dentista registado.</td>
+                `;
+                dentistsTable.appendChild(row);
+            } else {
+                nonAdminDentists.forEach(dentist => {
+                    const row = document.createElement('tr');
+                    row.className = 'table-row';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${dentist.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${dentist.cpf}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${dentist.cro}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(dentist.birth)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button class="text-red-600 hover:text-red-900 ml-4" onclick="deleteDentist(${dentist.id})">Excluir</button>
+                        </td>
+                    `;
+                    dentistsTable.appendChild(row);
+                });
+            }
+        }
+
+        function showAddDentistModal() {
+            document.getElementById('add-dentist-modal').classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+            document.getElementById('add-dentist-form').reset();
+        }
+
+        function addDentist(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('modal-dentist-name').value.trim();
+            const birth = document.getElementById('modal-dentist-birth').value;
+            const cpf = document.getElementById('modal-dentist-cpf').value.trim();
+            const cro = document.getElementById('modal-dentist-cro').value.trim();
+
+            if (!name || !birth || !cpf || !cro) {
+                showToast('Por favor, preencha todos os campos do dentista.', 'error');
+                return;
+            }
+
+            if (userData.dentists.some(d => d.cpf === cpf)) {
+                showToast('Já existe um dentista registado com este CPF.', 'error');
+                return;
+            }
+
+            const newDentist = {
+                id: userData.dentists.length ? Math.max(...userData.dentists.map(d => d.id)) + 1 : 1,
+                name,
+                birth,
+                cpf,
+                cro,
+                password: cpf,
+                isAdmin: false
+            };
+
+            userData.dentists.push(newDentist);
+            saveToLocalStorage('dentists', userData.dentists);
+
+            showToast('Dentista adicionado com sucesso!', 'success');
+            closeModal();
+            loadDentists();
+            populateDentistFilter();
+            populateResponsibleDentistSelect();
+        }
+
+        function deleteDentist(id) {
+            showConfirmationModal('Tem certeza que deseja excluir este dentista? Procedimentos já registados por ele PERMANECERÃO no histórico, mas serão associados a um "Dentista Removido".', () => {
+                const index = userData.dentists.findIndex(d => d.id === id);
+                if (index > -1) {
+                    userData.dentists.splice(index, 1);
+                    saveToLocalStorage('dentists', userData.dentists);
+
+                    showToast('Dentista excluído com sucesso!', 'success');
+                    loadDentists();
+                    populateDentistFilter();
+                    populateResponsibleDentistSelect();
+                    updateDashboard();
+                    loadHistory();
+                }
+            });
+        }
+
+
+        function populateDentistFilter() {
+            const dentistFilterSelect = document.getElementById('dentist-filter');
+            dentistFilterSelect.innerHTML = '<option value="">Todos</option>';
+            userData.dentists.forEach(dentist => {
+                if (!dentist.isAdmin) {
+                    const option = document.createElement('option');
+                    option.value = dentist.id;
+                    option.textContent = dentist.name;
+                    dentistFilterSelect.appendChild(option);
+                }
+            });
+        }
+
+
+        // --- Settings Page Functions (Admin Only) ---
+        function loadProcedures() {
+            const proceduresTable = document.getElementById('procedures-table');
+            proceduresTable.innerHTML = '';
+
+            if (userData.procedures.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">Nenhum procedimento registado.</td>
+                `;
+                proceduresTable.appendChild(row);
+            } else {
+                userData.procedures.forEach(proc => {
+                    const row = document.createElement('tr');
+                    row.className = 'table-row';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${proc.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(proc.cost)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button class="text-red-600 hover:text-red-900 ml-4" onclick="deleteProcedure(${proc.id})">Excluir</button>
+                        </td>
+                    `;
+                    proceduresTable.appendChild(row);
+                });
+            }
+        }
+
+        function showAddProcedureModal() {
+            document.getElementById('add-procedure-modal').classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+            document.getElementById('add-procedure-form').reset();
+        }
+
+        function addProcedure(e) {
+            e.preventDefault();
+            const name = document.getElementById('modal-procedure-name').value.trim();
+            const cost = parseFloat(document.getElementById('modal-procedure-cost').value);
+
+            if (!name || isNaN(cost) || cost < 0) {
+                showToast('Preencha o nome do procedimento e um custo válido (número positivo).', 'error');
+                return;
+            }
+
+            if (userData.procedures.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+                showToast('Já existe um procedimento com este nome.', 'error');
+                return;
+            }
+
+            const newProcedure = {
+                id: userData.procedures.length ? Math.max(...userData.procedures.map(p => p.id)) + 1 : 1,
+                name,
+                cost
+            };
+
+            userData.procedures.push(newProcedure);
+            saveToLocalStorage('procedures', userData.procedures);
+
+            showToast('Procedimento adicionado com sucesso!', 'success');
+            closeModal();
+            loadProcedures();
+            populateProceduresSelect();
+        }
+
+        function deleteProcedure(id) {
+            showConfirmationModal('Tem certeza que deseja excluir este procedimento? Isso não afetará registos passados que usaram este procedimento.', () => {
+                const index = userData.procedures.findIndex(p => p.id === id);
+                if (index > -1) {
+                    userData.procedures.splice(index, 1);
+                    saveToLocalStorage('procedures', userData.procedures);
+                    showToast('Procedimento excluído com sucesso!', 'success');
+                    loadProcedures();
+                    populateProceduresSelect();
+                }
+            });
+        }
+
+
+        function loadPaymentMethods() {
+            const paymentsTable = document.getElementById('payments-table');
+            paymentsTable.innerHTML = '';
+
+            if (userData.paymentMethods.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">Nenhuma forma de pagamento registada.</td>
+                `;
+                paymentsTable.appendChild(row);
+            } else {
+                userData.paymentMethods.forEach(method => {
+                    const row = document.createElement('tr');
+                    row.className = 'table-row';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${method.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${method.tax.toFixed(2)}%</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button class="text-red-600 hover:text-red-900 ml-4" onclick="deletePaymentMethod(${method.id})">Excluir</button>
+                        </td>
+                    `;
+                    paymentsTable.appendChild(row);
+                });
+            }
+        }
+
+        function showAddPaymentModal() {
+            document.getElementById('add-payment-modal').classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+            document.getElementById('add-payment-form').reset();
+        }
+
+        function addPaymentMethod(e) {
+            e.preventDefault();
+            const name = document.getElementById('modal-payment-name').value.trim();
+            const tax = parseFloat(document.getElementById('modal-payment-tax').value);
+
+            if (!name || isNaN(tax) || tax < 0) {
+                showToast('Preencha o nome da forma de pagamento e uma taxa válida (número positivo).', 'error');
+                return;
+            }
+
+            if (userData.paymentMethods.some(pm => pm.name.toLowerCase() === name.toLowerCase())) {
+                showToast('Já existe uma forma de pagamento com este nome.', 'error');
+                return;
+            }
+
+            const newPaymentMethod = {
+                id: userData.paymentMethods.length ? Math.max(...userData.paymentMethods.map(pm => pm.id)) + 1 : 1,
+                name,
+                tax
+            };
+
+            userData.paymentMethods.push(newPaymentMethod);
+            saveToLocalStorage('paymentMethods', userData.paymentMethods);
+
+            showToast('Forma de pagamento adicionada com sucesso!', 'success');
+            closeModal();
+            loadPaymentMethods();
+            populatePaymentMethodsSelect();
+        }
+
+        function deletePaymentMethod(id) {
+            showConfirmationModal('Tem certeza que deseja excluir esta forma de pagamento? Isso não afetará registos passados.', () => {
+                const index = userData.paymentMethods.findIndex(pm => pm.id === id);
+                if (index > -1) {
+                    userData.paymentMethods.splice(index, 1);
+                    saveToLocalStorage('paymentMethods', userData.paymentMethods);
+                    showToast('Forma de pagamento excluída com sucesso!', 'success');
+                    loadPaymentMethods();
+                    populatePaymentMethodsSelect();
+                }
+            });
+        }
+
+
+        // --- Initial Load and Event Listener Setup ---
+        // Load initial data from localStorage or use defaults
+        userData.dentists = loadFromLocalStorage('dentists', userData.defaultDentists);
+        userData.procedures = loadFromLocalStorage('procedures', userData.defaultProcedures);
+        userData.paymentMethods = loadFromLocalStorage('paymentMethods', userData.defaultPaymentMethods);
+        userData.records = loadFromLocalStorage('records', userData.defaultRecords);
+
+        // Set current date as default for service date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('service-date').value = today;
+
+        // DOM elements are now declared and assigned inside DOMContentLoaded
+        // to ensure they exist when accessed.
+        let loginPage;
+        let registerPage;
+        let mainApp;
+        let loginUsername;
+        let loginPassword;
+        let loginBtn;
+        let showRegister;
+        let backToLogin;
+        let registerBtn;
+        let logoutBtn;
+        let userName;
+        let adminMenu;
+        let navItems;
+        let pageContents;
+        let modalOverlay;
+        let closeModalBtns;
+        let toast;
+        let toastMessage;
+        let adminDentistFilter;
+        let adminActionsHeader;
+        let procedureSelect;
+        let paymentMethodSelect;
+        let responsibleDentistSelect;
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Assign DOM elements here
+            loginPage = document.getElementById('login-page');
+            registerPage = document.getElementById('register-page');
+            mainApp = document.getElementById('main-app');
+            loginUsername = document.getElementById('login-username');
+            loginPassword = document.getElementById('login-password');
+            loginBtn = document.getElementById('login-btn');
+            showRegister = document.getElementById('show-register');
+            backToLogin = document.getElementById('back-to-login');
+            registerBtn = document.getElementById('register-btn');
+            logoutBtn = document.getElementById('logout-btn');
+            userName = document.getElementById('user-name');
+            adminMenu = document.getElementById('admin-menu');
+            navItems = document.querySelectorAll('.nav-item');
+            pageContents = document.querySelectorAll('.page-content');
+            modalOverlay = document.getElementById('modal-overlay');
+            closeModalBtns = document.querySelectorAll('.close-modal');
+            toast = document.getElementById('toast');
+            toastMessage = document.getElementById('toast-message');
+            adminDentistFilter = document.getElementById('admin-dentist-filter');
+            adminActionsHeader = document.getElementById('admin-actions-header');
+            procedureSelect = document.getElementById('procedure');
+            paymentMethodSelect = document.getElementById('payment-method');
+            responsibleDentistSelect = document.getElementById('responsible-dentist');
+
+            // Event Listeners
+            loginBtn.addEventListener('click', handleLogin);
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginPage.classList.add('hidden');
+                registerPage.classList.remove('hidden');
+            });
+            backToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerPage.classList.add('hidden');
+                loginPage.classList.remove('hidden');
+            });
+            registerBtn.addEventListener('click', handleRegister);
+            logoutBtn.addEventListener('click', handleLogout);
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetPage = item.getAttribute('data-page');
+                    showPage(targetPage);
+
+                    navItems.forEach(navItem => {
+                        navItem.classList.remove('active-nav');
+                    });
+                    item.classList.add('active-nav');
+                });
+            });
+
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', closeModal);
+            });
+
+            document.getElementById('confirm-action').addEventListener('click', () => {
+                if (confirmActionCallback) {
+                    confirmActionCallback();
+                }
+                closeModal();
+            });
+
+            procedureSelect.addEventListener('change', updateProcedureValue);
+            document.getElementById('calculate-btn').addEventListener('click', calculateCommission);
+            document.getElementById('commission-form').addEventListener('submit', saveCommission);
+            document.getElementById('calculate-installment-btn').addEventListener('click', calculateInstallment);
+            // Inlining filterHistory logic directly into the event listener
+            document.getElementById('filter-btn').addEventListener('click', function() {
+                const historyTable = document.getElementById('history-table');
+                const startDate = document.getElementById('start-date').value;
+                const endDate = document.getElementById('end-date').value;
+                const dentistFilter = document.getElementById('dentist-filter').value;
+
+                let filteredRecords = userData.records;
+
+                if (userData.isAdmin && dentistFilter) {
+                    filteredRecords = filteredRecords.filter(r => r.dentistId === parseInt(dentistFilter));
+                } else if (!userData.isAdmin) {
+                    filteredRecords = filteredRecords.filter(r => r.dentistId === userData.currentUser.id);
+                }
+
+                if (startDate) {
+                    filteredRecords = filteredRecords.filter(r => r.date >= startDate);
+                }
+
+                if (endDate) {
+                    filteredRecords = filteredRecords.filter(r => r.date <= endDate);
+                }
+
+                filteredRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                historyTable.innerHTML = '';
+
+                let totalProcedures = 0;
+                let totalValue = 0;
+                let totalCommission = 0;
+
+                if (filteredRecords.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">Nenhum registo encontrado para os filtros aplicados.</td>
+                    `;
+                    historyTable.appendChild(row);
+                } else {
+                    filteredRecords.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.className = 'table-row';
+
+                        const dentist = userData.dentists.find(d => d.id === record.dentistId);
+                        const dentistName = dentist ? dentist.name : 'Dentista Removido';
+
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(record.date)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.patient} (${dentistName})</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.procedure}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(record.value)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.paymentMethod} (${record.paymentTax.toFixed(2)}%)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.commissionType}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 font-medium">${formatCurrency(record.commission)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ${userData.isAdmin ? '' : 'hidden'}">
+                                <button class="text-red-600 hover:text-red-900 ml-4" onclick="deleteRecord(${record.id})">Excluir</button>
+                            </td>
+                        `;
+                        historyTable.appendChild(row);
+
+                        totalProcedures++;
+                        totalValue += record.value;
+                        totalCommission += record.commission;
+                    });
+                }
+
+                document.getElementById('history-total-procedures').textContent = totalProcedures;
+                document.getElementById('history-total-value').textContent = formatCurrency(totalValue);
+                document.getElementById('history-total-commission').textContent = formatCurrency(totalCommission);
+            });
+
+            document.getElementById('add-dentist-btn').addEventListener('click', showAddDentistModal);
+            document.getElementById('add-procedure-btn').addEventListener('click', showAddProcedureModal);
+            document.getElementById('add-payment-btn').addEventListener('click', showAddPaymentModal);
+
+            document.getElementById('add-dentist-form').addEventListener('submit', addDentist);
+            document.getElementById('add-procedure-form').addEventListener('submit', addProcedure);
+            document.getElementById('add-payment-form').addEventListener('submit', addPaymentMethod);
+        });
+    </script>
+</body>
 </html>
+
+
